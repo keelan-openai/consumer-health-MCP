@@ -17,6 +17,44 @@
       "description": "Get summary of last doctor visit",
       "endpoint": "/doctor-prep",
       "method": "GET"
+    },
+    {
+      "name": "fetch_bodyspec_results",
+      "description": "List BodySpec scan results (paginated).",
+      "endpoint": "/bodyspec/results",
+      "method": "GET",
+      "params": {
+        "offset": {
+          "type": "integer",
+          "optional": true
+        },
+        "limit": {
+          "type": "integer",
+          "optional": true
+        }
+      }
+    },
+    {
+      "name": "fetch_bodyspec_dexa_composition",
+      "description": "Get DEXA body composition data for a BodySpec result_id.",
+      "endpoint": "/bodyspec/results/{result_id}/composition",
+      "method": "GET",
+      "path_params": {
+        "result_id": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "fetch_bodyspec_scan_info",
+      "description": "Get DEXA scan metadata for a BodySpec result_id.",
+      "endpoint": "/bodyspec/results/{result_id}/scan-info",
+      "method": "GET",
+      "path_params": {
+        "result_id": {
+          "type": "string"
+        }
+      }
     }
   ]
 }
