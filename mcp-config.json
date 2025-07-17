@@ -1,0 +1,22 @@
+{
+  "tools": [
+    {
+      "name": "fetch_labs",
+      "description": "Get recent lab results",
+      "endpoint": "/labs",
+      "method": "GET"
+    },
+    {
+      "name": "fetch_medications",
+      "description": "Get current medications",
+      "endpoint": "/medications",
+      "method": "GET"
+    },
+    {
+      "name": "doctor_prep",
+      "description": "Get summary of last doctor visit",
+      "endpoint": "/doctor-prep",
+      "method": "GET"
+    }
+  ]
+}
