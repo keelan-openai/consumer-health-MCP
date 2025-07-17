@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Lisinopril",
+    "dose": "10mg",
+    "frequency": "1x/day"
+  },
+  {
+    "name": "Atorvastatin",
+    "dose": "20mg",
+    "frequency": "1x/day"
+  }
+]
