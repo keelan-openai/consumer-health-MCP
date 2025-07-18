@@ -2,31 +2,58 @@
   "tools": [
     {
       "name": "search",
-      "description": "Generic search across labs, medications, visits, and BodySpec results",
+      "description": "Search labs, medications, visits, and BodySpec results",
       "endpoint": "/search",
       "method": "GET",
       "params": {
         "q": {
           "type": "string",
+          "description": "Query string to search for",
           "optional": true
         }
       }
     },
     {
       "name": "fetch",
-      "description": "Fetch a specific record by ID",
-      "endpoint": "/fetch",
-      "method": "POST",
-      "request_body": {
-        "id": { "type": "string" }
+      "description": "Fetch details of a record by its composite ID (lab, med, visit, bodyspec)",
+      "endpoint": "/fetch/{id}",
+      "method": "GET",
+      "path_params": {
+        "id": {
+          "type": "string",
+          "description": "Composite ID (e.g., lab:CBC:2025-07-10)"
+        }
       }
-    }
-    ,
+    },
     {
       "name": "fetch_bodyspec_results",
-      "description": "List BodySpec scan results",
+      "description": "Fetch a list of BodySpec DEXA scan results",
       "endpoint": "/bodyspec/results",
       "method": "GET"
+    },
+    {
+      "name": "fetch_bodyspec_dexa_composition",
+      "description": "Fetch BodySpec DEXA composition for a specific result",
+      "endpoint": "/bodyspec/results/{result_id}/composition",
+      "method": "GET",
+      "path_params": {
+        "result_id": {
+          "type": "string",
+          "description": "The BodySpec result ID"
+        }
+      }
+    },
+    {
+      "name": "fetch_bodyspec_scan_info",
+      "description": "Fetch BodySpec scan metadata for a specific result",
+      "endpoint": "/bodyspec/results/{result_id}/scan-info",
+      "method": "GET",
+      "path_params": {
+        "result_id": {
+          "type": "string",
+          "description": "The BodySpec result ID"
+        }
+      }
     }
   ]
 }
