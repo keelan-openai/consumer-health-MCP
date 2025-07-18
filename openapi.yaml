@@ -1,0 +1,95 @@
+openapi: 3.0.3
+info:
+  title: Health MCP API
+  version: 0.0.2
+servers:
+  - url: /
+paths:
+  /search:
+    post:
+      summary: Search records
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        description:
+                          type: string
+  /fetch:
+    post:
+      summary: Fetch a specific record by ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id]
+              properties:
+                id:
+                  type: string
+      responses:
+        '200':
+          description: Full record
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: { type: string }
+                  title: { type: string }
+                  content: { type: string }
+                  tags:
+                    type: array
+                    items: { type: string }
+  /nbodyspec:
+    post:
+      summary: Calculate body spec metrics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [height, weight]
+              properties:
+                height: { type: number, description: "cm" }
+                weight: { type: number, description: "kg" }
+                age: { type: number }
+                gender: { type: string }
+      responses:
+        '200':
+          description: Calculated metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  height: { type: number }
+                  weight: { type: number }
+                  age: { type: number }
+                  gender: { type: string }
+                  bmi: { type: string }
+                  category: { type: string }
+                  message: { type: string }

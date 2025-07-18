@@ -1,0 +1,76 @@
+{
+  "name": "health-mcp",
+  "version": "0.0.2",
+  "operations": [
+    {
+      "name": "search",
+      "description": "Search records",
+      "endpoint": "/search",
+      "method": "POST",
+      "request_body": {
+        "query": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "results": [
+          {
+            "id": "string",
+            "title": "string",
+            "description": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "fetch",
+      "description": "Fetch a specific record by ID",
+      "endpoint": "/fetch",
+      "method": "POST",
+      "request_body": {
+        "id": {
+          "type": "string"
+        }
+      },
+      "response": {
+        "id": "string",
+        "title": "string",
+        "content": "string",
+        "tags": [
+          "string"
+        ]
+      }
+    },
+    {
+      "name": "nbodyspec",
+      "description": "Calculate body metrics from user input (height cm, weight kg)",
+      "endpoint": "/nbodyspec",
+      "method": "POST",
+      "request_body": {
+        "height": {
+          "type": "number"
+        },
+        "weight": {
+          "type": "number"
+        },
+        "age": {
+          "type": "number",
+          "optional": true
+        },
+        "gender": {
+          "type": "string",
+          "optional": true
+        }
+      },
+      "response": {
+        "height": "number",
+        "weight": "number",
+        "age": "number|null",
+        "gender": "string",
+        "bmi": "string",
+        "category": "string",
+        "message": "string"
+      }
+    }
+  ]
+}
