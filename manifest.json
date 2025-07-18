@@ -1,15 +1,17 @@
 {
   "name": "health-mcp",
   "version": "0.0.1",
+  "description": "A minimal MCP server that provides health data search and record fetching.",
   "operations": [
     {
       "name": "search",
-      "description": "Search records",
+      "description": "Search health records based on a query string",
       "endpoint": "/search",
       "method": "POST",
       "request_body": {
         "query": {
-          "type": "string"
+          "type": "string",
+          "description": "Search term to look up in health records."
         }
       },
       "response": {
@@ -25,12 +27,13 @@
     },
     {
       "name": "fetch",
-      "description": "Fetch a specific record by ID",
+      "description": "Fetch the full content of a record by ID",
       "endpoint": "/fetch",
       "method": "POST",
       "request_body": {
         "id": {
-          "type": "string"
+          "type": "string",
+          "description": "The record ID to fetch."
         }
       },
       "response": {
