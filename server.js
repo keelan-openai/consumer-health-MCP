@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import axios from "axios";
 
 const app = express();
 
@@ -101,6 +102,7 @@ app.post("/nbodyspec", (req, res) => {
       return res.status(400).json({ error: "Missing height or weight" });
     }
 
+    // Example BMI calculation
     const bmi = (weight / ((height / 100) ** 2)).toFixed(2);
     let category = "Normal";
     if (bmi < 18.5) category = "Underweight";
@@ -119,6 +121,91 @@ app.post("/nbodyspec", (req, res) => {
   } catch (err) {
     console.error("nbodyspec error", err);
     res.status(500).json({ error: "Internal nbodyspec error" });
+  }
+});
+
+// ---------- BodySpec API Proxy Endpoints ----------
+
+// POST /bodyspec/user - Get user info by email
+app.post("/bodyspec/user", async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ error: "Missing email" });
+    const apiKey = process.env.BODYSPEC_API_KEY;
+    const response = await axios.get(
+      `https://api.bodyspec.com/v1/users?email=${encodeURIComponent(email)}`,
+      { headers: { Authorization: `Bearer ${apiKey}` } }
+    );
+    res.json(response.data);
+  } catch (err) {
+    console.error("BodySpec user fetch error", err?.response?.data || err);
+    res.status(500).json({ error: "Failed to fetch user info from BodySpec", details: err?.response?.data || err.message });
+  }
+});
+
+// POST /bodyspec/user/scans - Get all scans for a user by user_id
+app.post("/bodyspec/user/scans", async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    if (!user_id) return res.status(400).json({ error: "Missing user_id" });
+    const apiKey = process.env.BODYSPEC_API_KEY;
+    const response = await axios.get(
+      `https://api.bodyspec.com/v1/users/${encodeURIComponent(user_id)}/scans`,
+      { headers: { Authorization: `Bearer ${apiKey}` } }
+    );
+    res.json(response.data);
+  } catch (err) {
+    console.error("BodySpec user scans fetch error", err?.response?.data || err);
+    res.status(500).json({ error: "Failed to fetch scans from BodySpec", details: err?.response?.data || err.message });
+  }
+});
+
+// POST /bodyspec/scan - Get scan details by scan_id
+app.post("/bodyspec/scan", async (req, res) => {
+  try {
+    const { scan_id } = req.body;
+    if (!scan_id) return res.status(400).json({ error: "Missing scan_id" });
+    const apiKey = process.env.BODYSPEC_API_KEY;
+    const response = await axios.get(
+      `https://api.bodyspec.com/v1/scans/${encodeURIComponent(scan_id)}`,
+      { headers: { Authorization: `Bearer ${apiKey}` } }
+    );
+    res.json(response.data);
+  } catch (err) {
+    console.error("BodySpec scan fetch error", err?.response?.data || err);
+    res.status(500).json({ error: "Failed to fetch scan from BodySpec", details: err?.response?.data || err.message });
+  }
+});
+
+// POST /bodyspec/user/appointments - Get appointments for a user by user_id
+app.post("/bodyspec/user/appointments", async (req, res) => {
+  try {
+    const { user_id } = req.body;
+    if (!user_id) return res.status(400).json({ error: "Missing user_id" });
+    const apiKey = process.env.BODYSPEC_API_KEY;
+    const response = await axios.get(
+      `https://api.bodyspec.com/v1/users/${encodeURIComponent(user_id)}/appointments`,
+      { headers: { Authorization: `Bearer ${apiKey}` } }
+    );
+    res.json(response.data);
+  } catch (err) {
+    console.error("BodySpec appointments fetch error", err?.response?.data || err);
+    res.status(500).json({ error: "Failed to fetch appointments from BodySpec", details: err?.response?.data || err.message });
+  }
+});
+
+// GET /bodyspec/locations - Get all BodySpec locations
+app.get("/bodyspec/locations", async (_req, res) => {
+  try {
+    const apiKey = process.env.BODYSPEC_API_KEY;
+    const response = await axios.get(
+      `https://api.bodyspec.com/v1/locations`,
+      { headers: { Authorization: `Bearer ${apiKey}` } }
+    );
+    res.json(response.data);
+  } catch (err) {
+    console.error("BodySpec locations fetch error", err?.response?.data || err);
+    res.status(500).json({ error: "Failed to fetch locations from BodySpec", details: err?.response?.data || err.message });
   }
 });
 

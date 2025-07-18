@@ -15,14 +15,13 @@
     {
       "name": "fetch",
       "description": "Fetch a specific record by ID",
-      "endpoint": "/fetch/{id}",
-      "method": "GET",
-      "path_params": {
-        "id": {
-          "type": "string"
-        }
+      "endpoint": "/fetch",
+      "method": "POST",
+      "request_body": {
+        "id": { "type": "string" }
       }
-    },
+    }
+    ,
     {
       "name": "fetch_bodyspec_results",
       "description": "List BodySpec scan results",
